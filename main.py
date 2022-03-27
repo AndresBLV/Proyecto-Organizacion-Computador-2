@@ -1,6 +1,7 @@
+from funciones import *
 
 def main():
-  db = {'cota':{},'titulo':(),'serial':(),'disponible':(),'prestamo':()}
+  db = {'libros':{},'cota':[],'titulo':[],'serial':[],'disponible':0,'prestamo':0}
 
   while True:
     print("Bienvendos al registro de libros de la Librería Pública de Manhattan")
@@ -19,15 +20,17 @@ def main():
         print('\n')
 
     if option == 1:
-      break
+      print('\n')
+      db = book_register(db)
+      print('\n')
     elif option == 2:
       break
     elif option == 3:
-      break
-
+      print('\n')
+      db = book_loan(db)
+      print('\n')
     elif option == 4:
       break
-
     elif  option == 5:
       break 
     else:
