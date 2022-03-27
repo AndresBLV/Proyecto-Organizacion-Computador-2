@@ -64,7 +64,6 @@ def book_loan(db):
   for i,(key,value) in enumerate(db['libros'].items()):
     if value.get_disponible() != 0:
       print(f'{i+1}.-Titulo: {value.get_titulo()}; disponibilidad: {value.get_disponible()}')
-
   while True:
     try:
       selecction = int(input('Ingrese el indice del ejemplear deseado:\n=> '))
@@ -81,5 +80,41 @@ def book_loan(db):
       db['libros'][libro].set_disponible(disponible)
       db['libros'][libro].set_prestamo(prestamo)
       db['disponible'] -= 1
+      db['prestamo'] += 1
+
+  print('\n')
+  print('Se ha realizado el prestamo del libro seleccionado')
+  
+  return db
+
+def book_return(db):
+  print(f'Ejemplares prestados')
+  if db['prestamo'] == 0:
+    print('No hay ejemplares prestados en la libreria')
+    return db
+  for i,(key,value) in enumerate(db['libros'].items()):
+    if value.get_prestamo() != 0:
+      print(f'{i+1}.-Titulo: {value.get_titulo()}; prestados: {value.get_prestamo()}')
+  
+  while True:
+    try:
+      selecction = int(input('Ingrese el indice del ejemplear a regresar:\n=> '))
+      if (selecction-1) not in range(0,len(db['libros'])):
+        raise Exception
+      break
+    except:
+      print('Ingresa una opcion valida')
       
+  for i,libro in enumerate(db['libros']):
+    if (selecction-1) == i:
+      disponible = db['libros'][libro].get_disponible() + 1
+      prestamo = db['libros'][libro].get_prestamo() - 1
+      db['libros'][libro].set_disponible(disponible)
+      db['libros'][libro].set_prestamo(prestamo)
+      db['disponible'] += 1
+      db['prestamo'] -= 1
+
+  print('\n')
+  print('Se ha retornado el libro seleccionado')
+  
   return db

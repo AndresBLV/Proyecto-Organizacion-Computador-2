@@ -30,7 +30,9 @@ def main():
       db = book_loan(db)
       print('\n')
     elif option == 4:
-      break
+      print('\n')
+      db = book_return(db)
+      print('\n')
     elif  option == 5:
       break 
     else:
