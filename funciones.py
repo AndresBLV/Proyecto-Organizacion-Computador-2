@@ -207,10 +207,8 @@ def book_loan(db,hash_table):
 
   for key,libro in (db['libros'].items()):
     if (cota) == key:
-      disponible = libro.get_disponible() - 1
-      prestamo = libro.get_prestamo() + 1
-      libro.set_disponible(disponible)
-      libro.set_prestamo(prestamo)
+      libro.set_disponible(h_disponible)
+      libro.set_prestamo(h_prestamo)
       db['disponible'] -= 1
       db['prestamo'] += 1
 
@@ -256,10 +254,8 @@ def book_return(db,hash_table):
 
   for key,libro in (db['libros'].items()):
     if (cota) == key:
-      disponible = libro.get_disponible() - 1
-      prestamo = libro.get_prestamo() + 1
-      libro.set_disponible(disponible)
-      libro.set_prestamo(prestamo)
+      libro.set_disponible(h_disponible)
+      libro.set_prestamo(h_prestamo)
       db['disponible'] += 1
       db['prestamo'] -= 1
 
