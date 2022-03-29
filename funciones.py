@@ -149,10 +149,14 @@ def load_data_txt(name_txt,db):
   binary_write.close() # Se cierra el archivo
 
 def book_delete(db):
+  if len(db['libros']) == 0:
+    print('No hay libros registrados en la libreria')
+    return db
+    
   while True:
     try:
       serial = input('Ingrese el serial del libro que desea eliminar:\n=> ')
-      if len(serial) != 12 or serial in db['serial'] or not (serial.isnumeric()):
+      if len(serial) != 12 or not (serial.isnumeric()):
         raise Exception
       break
     except:
@@ -171,6 +175,7 @@ def book_delete(db):
       db['disponible'] -= disponible
       db['prestamo'] -= prestamo
 
+      print('Libro eliminado con exito')
       return db
 
   print('El libro que desea eliminar no se encuentra registrado')
