@@ -1,12 +1,57 @@
 from book import Book
 import pickle
 import os
+def search_menu(hash_table):
+  while True:
+      try:
+        option = int(input("Ingrese la opcion que desea realizar:\n1.-Busqueda por Cota\n2.-Busqueda por Titulo\n3.-Busqueda por Serial\n4.-Volver al Menu Principal\n==> "))
+        if option not in range(1,5):
+          raise Exception
+      except:
+        print('Ingreso un valor invalido')
+        print('\n')
+      
+      if option == 1:
+        while True:
+          try:
+            cota = input('Ingrese la cota del libro a buscar:\n=> ')
+            if (valid(cota) != True):
+              raise Exception
+            posicion = hash(cota)
+            encontrado = False
+            for estanteria in hash_table[posicion]:
+              for estante in estanteria:
+                if cota == estante.get_cota():
+                  encontrado = True
+                  libro = estante
+                  break
+            if encontrado == False:
+              print(f"La cota '{cota}' no corresponde a ningun libro registrado")
+            else:
+              print(f"Cota: {libro.get_cota()}\nTitulo: {libro.get_titulo()}\nSerial: {libro.get_serial()}\nDisponibles:{libro.get_disponible()}\nPrestados:{libro.get_prestamo()}")
+            break
+          except:
+            print('Ingreso una cota invalida, recuerde que debe contener 6 letras y 2 digitos')
+             
+      elif option == 2:
+        pass
+      elif option == 3:
+        pass
+      else:
+        break
 
-def book_register(db):
+def searc_by_titulo(db,hash_table,titulo):
+  pass
+
+def searc_by_serial(db,hash_table,serial):
+  pass
+
+
+def book_register(db,hash_table):
   while True:
     try:
-      cota = input('Ingrese la cota del libro a registrar:\n=> ').upper()
-      if len(cota) != 8 or cota in db['cota'] or valid(cota):
+      cota = input('Ingrese la cota del libro a registrar:\n=> ')
+      if (cota in db['cota']) or (valid(cota) != True):
         raise Exception
       break
     except:
@@ -15,7 +60,7 @@ def book_register(db):
   while True:
     try:
       serial = input('Ingrese el serial asignado por la editorial:\n=> ')
-      if len(serial) != 12 or serial in db['serial'] or not (serial.isnumeric()):
+      if (len(serial) != 12) or (serial in db['serial']) or not (serial.isnumeric()):
         raise Exception
       break
     except:
@@ -24,7 +69,7 @@ def book_register(db):
   while True:
     try:
       titulo = input('Ingrese el titulo del libro:\n=> ').title()
-      if len(titulo) > 30 or titulo in db['titulo']:
+      if (len(titulo) > 30) or (titulo in db['titulo']):
         raise Exception
       break
     except:
@@ -33,6 +78,8 @@ def book_register(db):
   while True:
     try:
       disponibilidad = int(input('Ingrese la disponibilidad del libro ingresado:\n=> '))
+      if (disponibilidad < 1):
+        raise Exception
       break
     except:
       print('Ingresa un valor valido')
@@ -45,18 +92,54 @@ def book_register(db):
   db['serial'].append(serial)
   db['disponible'] += disponibilidad
 
+  posicion = hash(cota)
+  for estanteria in hash_table[posicion]:
+    if len(estanteria) < 3:
+      estanteria.append(book)
+      
+      break 
+      
   print('El libro ha sido registrado')
   return db
   
 def valid(cota):
-  count = 0
-  for char in cota:
-    if char.isdigit():
-      count +=1
-  if count == 2:
-    return False
+  
+  letterCount = 0
+  numberCount = 0
+  counter = 0
+  isValid = False
+  if len(cota) != 8:
+    return isValid
   else:
-    return True
+    for x in cota:
+      if x.isalpha():
+        letterCount += 1
+      if (counter == 6 and int(x.isnumeric())) or (counter == 7 and int(x.isnumeric())):
+        numberCount += 1
+      counter += 1
+    if letterCount == 6 and numberCount == 2:
+      isValid = True
+      return isValid
+    else:
+      return isValid  
+
+def hash(cota):
+  valor = 0
+  posicion = 1
+  for x in cota:
+    
+    if ord(x) >= 48 and ord(x) <=57:
+        valor += ((ord(x)-47)*posicion)
+    
+    elif ord(x)>=65 and ord(x) <=90:
+        valor += ((ord(x)-54)*posicion)
+    
+    elif ord(x) >=97 and ord(x) <=122:
+        valor += ((ord(x) - 60)*posicion)
+    
+    posicion += 1 
+  
+  return (valor % 2)
 
 def book_loan(db):
   print('Ejemplares disponibles')

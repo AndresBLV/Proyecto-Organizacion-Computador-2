@@ -2,7 +2,11 @@ from funciones import *
 
 def main():
   db = {'libros':{},'cota':[],'titulo':[],'serial':[],'disponible':0,'prestamo':0}
+  hash_table = [
+                  [[],    [],[],[],[],[],[] ],
 
+                  [[],    [],[],[],[],[],[] ]
+                ]
   db = recive_data_text('base.txt',db)
   
   while True:
@@ -23,12 +27,14 @@ def main():
 
     if option == 1:
       print('\n')
-      db = book_register(db)
+      db = book_register(db,hash_table)
       load_data_txt('base.txt',db)
       print('\n')
     elif option == 2:
+      print('\n')
+      search_menu(hash_table)
       load_data_txt('base.txt',db)
-      break
+      print('\n')
     elif option == 3:
       print('\n')
       db = book_loan(db)
