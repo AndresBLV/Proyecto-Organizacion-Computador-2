@@ -1,4 +1,6 @@
 from book import Book
+import pickle
+import os
 
 def book_register(db):
   while True:
@@ -119,11 +121,11 @@ def book_return(db):
   
   return db
 
-  def recive_data_text(name_txt,db):
+def recive_data_text(name_txt,db):
   """
   Parametro: La funcion recibe por parametro el diccionario db(dict) y un archivo.txt.
   Return: La funcion retorna el diccionario con los datos serializados en el archivo.txt.
-  """
+    """
 
   binary_read = open(name_txt,'rb') # Se abre el archivo 
 
@@ -138,7 +140,7 @@ def load_data_txt(name_txt,db):
   """
   Parametro: La funcion recibe por parametro el archivo de texto y el diccionario db(dict).
   Return: La funcion no retorna ningun valor, se encarga de serializar los datos contenidos en el diccionario en el archivo de texto.
-  """
+  """  
   # Se abre el archivo para hacer la escritura binaria
   binary_write = open(name_txt,'wb')
 

@@ -27,6 +27,7 @@ def main():
       load_data_txt('base.txt',db)
       print('\n')
     elif option == 2:
+      load_data_txt('base.txt',db)
       break
     elif option == 3:
       print('\n')
