@@ -198,6 +198,7 @@ def book_loan(db,hash_table):
         break
   if encontrado == False:
     print(f"La cota '{cota}' no corresponde a ningun libro registrado")
+    return db, hash_table
   else:
     h_disponible = libro.get_disponible() -1
     h_prestamo = libro.get_prestamo() + 1
@@ -245,6 +246,7 @@ def book_return(db,hash_table):
         break
   if encontrado == False:
     print(f"La cota '{cota}' no corresponde a ningun libro registrado")
+    return db, hash_table
   else:
     h_disponible = libro.get_disponible() -+1
     h_prestamo = libro.get_prestamo() - 1
