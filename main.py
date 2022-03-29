@@ -7,10 +7,10 @@ def main():
 
                   [[],    [],[],[],[],[],[] ]
                 ]
-  print(hash_table)
+  
   db = recive_data_text('base.txt',db)
   hash_table =    recive_data_text('hash_table.txt',hash_table)
-  print(hash_table)
+ 
   while True:
     print("Bienvendos al registro de libros de la Librería Pública de Manhattan")
     print("\n")

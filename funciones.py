@@ -176,7 +176,7 @@ def book_loan(db,hash_table):
   print('Ejemplares disponibles')
   if db['disponible'] == 0:
     print('No hay ejemplares disponibles en la libreria')
-    return db
+    return db, hash_table
   for i,(key,value) in enumerate(db['libros'].items()):
     if value.get_disponible() != 0:
       print(f'{i+1}.-Cota: {value.get_cota()}; Titulo: {value.get_titulo()}; disponibilidad: {value.get_disponible()}')
@@ -185,24 +185,25 @@ def book_loan(db,hash_table):
       cota = input('Ingrese la cota del libro a prestar:\n=> ')
       if (valid(cota) != True):
         raise Exception
-      posicion = hash(cota)
-      encontrado = False
-      for estanteria in hash_table[posicion]:
-        for estante in estanteria:
-          if cota == estante.get_cota():
-            encontrado = True
-            libro = estante
-            break
-      if encontrado == False:
-        print(f"La cota '{cota}' no corresponde a ningun libro registrado")
-      else:
-        h_disponible = libro.get_disponible -1
-        h_prestamo = libro.get_prestamo + 1
-        libro.set_prestamo(h_prestamo)
-        libro.set_disponible(h_disponible)
-        break
+      break  
     except:
       print('Ingreso una cota invalida, recuerde que debe contener 6 letras y 2 digitos')
+  posicion = hash(cota)
+  encontrado = False
+  for estanteria in hash_table[posicion]:
+    for estante in estanteria:
+      if cota == estante.get_cota():
+        encontrado = True
+        libro = estante
+        break
+  if encontrado == False:
+    print(f"La cota '{cota}' no corresponde a ningun libro registrado")
+  else:
+    h_disponible = libro.get_disponible() -1
+    h_prestamo = libro.get_prestamo() + 1
+    libro.set_prestamo(h_prestamo)
+    libro.set_disponible(h_disponible)
+
   for key,libro in (db['libros'].items()):
     if (cota) == key:
       disponible = libro.get_disponible() - 1
@@ -221,7 +222,7 @@ def book_return(db,hash_table):
   print(f'Ejemplares prestados')
   if db['prestamo'] == 0:
     print('No hay ejemplares prestados en la libreria')
-    return db
+    return db, hash_table
   for i,(key,value) in enumerate(db['libros'].items()):
     if value.get_prestamo() != 0:
       print(f'{i+1}.-Cota: {value.get_cota()}; Titulo: {value.get_titulo()}; prestados: {value.get_prestamo()}')
@@ -231,24 +232,26 @@ def book_return(db,hash_table):
       cota = input('Ingrese la cota del libro a retornar:\n=> ')
       if (valid(cota) != True):
         raise Exception
-      posicion = hash(cota)
-      encontrado = False
-      for estanteria in hash_table[posicion]:
-        for estante in estanteria:
-          if cota == estante.get_cota():
-            encontrado = True
-            libro = estante
-            break
-      if encontrado == False:
-        print(f"La cota '{cota}' no corresponde a ningun libro registrado")
-      else:
-        h_disponible = libro.get_disponible -+1
-        h_prestamo = libro.get_prestamo - 1
-        libro.set_prestamo(h_prestamo)
-        libro.set_disponible(h_disponible)
-        break
+      break
     except:
       print('Ingreso una cota invalida, recuerde que debe contener 6 letras y 2 digitos')
+  posicion = hash(cota)
+  encontrado = False
+  for estanteria in hash_table[posicion]:
+    for estante in estanteria:
+      if cota == estante.get_cota():
+        encontrado = True
+        libro = estante
+        break
+  if encontrado == False:
+    print(f"La cota '{cota}' no corresponde a ningun libro registrado")
+  else:
+    h_disponible = libro.get_disponible() -+1
+    h_prestamo = libro.get_prestamo() - 1
+    libro.set_prestamo(h_prestamo)
+    libro.set_disponible(h_disponible)
+    
+
   for key,libro in (db['libros'].items()):
     if (cota) == key:
       disponible = libro.get_disponible() - 1
@@ -259,7 +262,7 @@ def book_return(db,hash_table):
       db['prestamo'] -= 1
 
       print('\n')
-      print('Se ha realizado el prestamo del libro seleccionado')
+      print('Se ha regresado el lirbo prestado')
       
       return db,hash_table
                     
