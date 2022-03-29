@@ -27,7 +27,7 @@ def main():
 
     if option == 1:
       print('\n')
-      db = book_register(db,hash_table)
+      db,hash_table = book_register(db,hash_table)
       load_data_txt('base.txt',hash_table)
       load_data_txt('base.txt',db)
       print('\n')

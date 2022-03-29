@@ -34,18 +34,49 @@ def search_menu(hash_table):
             print('Ingreso una cota invalida, recuerde que debe contener 6 letras y 2 digitos')
              
       elif option == 2:
-        pass
+        while True:
+          try:
+            titulo = input('Ingrese el titulo del libro a buscar:\n=> ').title()
+            if (len(titulo) > 30) :
+              raise Exception
+            posicion = hash(titulo)
+            encontrado = False
+            for estanteria in hash_table[posicion]:
+              for estante in estanteria:
+                if cota == estante.get_titulo():
+                  encontrado = True
+                  libro = estante
+                  break
+            if encontrado == False:
+              print(f"El titulo '{titulo}' no corresponde a ningun libro registrado")
+            else:
+              print(f"Cota: {libro.get_cota()}\nTitulo: {libro.get_titulo()}\nSerial: {libro.get_serial()}\nDisponibles:{libro.get_disponible()}\nPrestados:{libro.get_prestamo()}")
+            break
+          except:
+            print('Ingreso un titulo invalido recuerde que como maximo son 30 caracteres')
       elif option == 3:
-        pass
+        while True:
+          try:
+            serial = input('Ingrese el serial del libro a buscar:\n=> ')
+            if(len(serial) != 12) or not (serial.isnumeric()):
+              raise Exception
+            posicion = hash(serial)
+            encontrado = False
+            for estanteria in hash_table[posicion]:
+              for estante in estanteria:
+                if serial == estantes.get_serial():
+                  encontrado = True
+                  libro = estante
+                  break
+            if encontrado == False:
+              print(f"El serial '{serial}' no corresponde a ningun libro registrado")
+            else:
+              print(f"Cota: {libro.get_cota()}\nTitulo: {libro.get_titulo()}\nSerial: {libro.get_serial()}\nDisponibles:{libro.get_disponible()}\nPrestados:{libro.get_prestamo()}")
+            break
+          except:
+            print('Ingreso un serial invalido, recuerde que debe ser minimo 12 caracateres numericos')
       else:
         break
-
-def searc_by_titulo(db,hash_table,titulo):
-  pass
-
-def searc_by_serial(db,hash_table,serial):
-  pass
-
 
 def book_register(db,hash_table):
   while True:
@@ -100,7 +131,7 @@ def book_register(db,hash_table):
       break 
       
   print('El libro ha sido registrado')
-  return db
+  return db, hash_table
   
 def valid(cota):
   
@@ -148,7 +179,7 @@ def book_loan(db,hash_table):
     return db
   for i,(key,value) in enumerate(db['libros'].items()):
     if value.get_disponible() != 0:
-      print(f'{i+1}.-Titulo: {value.get_titulo()}; disponibilidad: {value.get_disponible()}')
+      print(f'{i+1}.-Cota: {value.get_cota()}; Titulo: {value.get_titulo()}; disponibilidad: {value.get_disponible()}')
   while True:
     try:
       cota = input('Ingrese la cota del libro a buscar:\n=> ').upper()
@@ -194,7 +225,7 @@ def book_return(db,hash_table):
     return db
   for i,(key,value) in enumerate(db['libros'].items()):
     if value.get_prestamo() != 0:
-      print(f'{i+1}.-Titulo: {value.get_titulo()}; prestados: {value.get_prestamo()}')
+      print(f'{i+1}.-Cota: {value.get_cota()}; Titulo: {value.get_titulo()}; prestados: {value.get_prestamo()}')
   
   while True:
     try:
