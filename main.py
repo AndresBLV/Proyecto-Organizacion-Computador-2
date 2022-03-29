@@ -8,7 +8,7 @@ def main():
                   [[],    [],[],[],[],[],[] ]
                 ]
   db = recive_data_text('base.txt',db)
-  
+  hash_table = recive_data_text('base.txt',hash_table)
   while True:
     print("Bienvendos al registro de libros de la Librería Pública de Manhattan")
     print("\n")
@@ -28,26 +28,31 @@ def main():
     if option == 1:
       print('\n')
       db = book_register(db,hash_table)
+      load_data_txt('base.txt',hash_table)
       load_data_txt('base.txt',db)
       print('\n')
     elif option == 2:
       print('\n')
       search_menu(hash_table)
+      load_data_txt('base.txt',hash_table)
       load_data_txt('base.txt',db)
       print('\n')
     elif option == 3:
       print('\n')
-      db = book_loan(db)
+      db,hash_table = book_loan(db,hash_table)
+      load_data_txt('base.txt',hash_table)
       load_data_txt('base.txt',db)
       print('\n')
     elif option == 4:
       print('\n')
-      db = book_return(db)
+      db,hash_table = book_return(db,hash_table)
+      load_data_txt('base.txt',hash_table)
       load_data_txt('base.txt',db)
       print('\n')
     elif  option == 5:
       print('\n')
       db = book_delete(db)
+      load_data_txt('base.txt',hash_table)
       load_data_txt('base.txt',db)
       print('\n')
     else:
