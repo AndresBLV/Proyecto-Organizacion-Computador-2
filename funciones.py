@@ -147,3 +147,33 @@ def load_data_txt(name_txt,db):
   db = pickle.dump(db,binary_write) #Se extraen los daos del diccionarioy se guardan en el txt
 
   binary_write.close() # Se cierra el archivo
+
+def book_delete(db):
+  while True:
+    try:
+      serial = input('Ingrese el serial del libro que desea eliminar:\n=> ')
+      if len(serial) != 12 or serial in db['serial'] or not (serial.isnumeric()):
+        raise Exception
+      break
+    except:
+      print('El codigo debe ser numerico y de 12 caracteres')
+
+  for key,values in db['libros'].items():
+    if key == serial:
+      cota = values.get_cota()
+      titulo = values.get_titulo()
+      disponible = values.get_disponible()
+      prestamo = values.get_prestamo()
+
+      del db['libros'][serial]
+      db['cota'].remove(cota)
+      db['titulo'].remove(titulo)
+      db['disponible'] -= disponible
+      db['prestamo'] -= prestamo
+
+      return db
+
+  print('El libro que desea eliminar no se encuentra registrado')
+  
+  return db
+  

@@ -40,7 +40,10 @@ def main():
       load_data_txt('base.txt',db)
       print('\n')
     elif  option == 5:
-      break 
+      print('\n')
+      db = book_delete(db)
+      load_data_txt('base.txt',db)
+      print('\n')
     else:
       print('Gracias por su vistia')
       print('Vuelva pronto')
