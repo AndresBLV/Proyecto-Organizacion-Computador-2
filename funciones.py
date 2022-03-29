@@ -14,7 +14,7 @@ def search_menu(hash_table):
       if option == 1:
         while True:
           try:
-            cota = input('Ingrese la cota del libro a buscar:\n=> ').upper()
+            cota = input('Ingrese la cota del libro a buscar:\n=> ')
             if (valid(cota) != True):
               raise Exception
             posicion = hash(cota)
@@ -182,28 +182,12 @@ def book_loan(db,hash_table):
       print(f'{i+1}.-Cota: {value.get_cota()}; Titulo: {value.get_titulo()}; disponibilidad: {value.get_disponible()}')
   while True:
     try:
-      cota = input('Ingrese la cota del libro a buscar:\n=> ').upper()
+      cota = input('Ingrese la cota del libro a buscar:\n=> ')
       if (valid(cota) != True):
         raise Exception
     except:
       print('Cota invalida')
-    posicion = hash(cota)
-    encontrado = False
-    for estanteria in hash_table[posicion]:
-              for estante in estanteria:
-                if cota == estante.get_cota():
-                  encontrado = True
-                  libro = estante
-                  break
-              if encontrado == False:
-                print(f"La cota '{cota}' no corresponde a ningun libro registrado")
-                return db,hash_table
-                
-              else:
-                h_disponible = libro.get_disponible() - 1
-                h_prestamo = libro.get_prestamo() + 1
-                libro.set_disponible(h_disponible)
-                libro.set_prestamo(h_prestamo)
+   
     for key,libro in (db['libros'].items()):
       if (cota) == key:
         disponible = libro.get_disponible() - 1
@@ -229,28 +213,12 @@ def book_return(db,hash_table):
   
   while True:
     try:
-      cota = input('Ingrese la cota del libro a regresar:\n=> ').upper()
+      cota = input('Ingrese la cota del libro a regresar:\n=> ')
       if (valid(cota) != True):
         raise Exception
     except:
       print('Cota invalida')
-    posicion = hash(cota)
-    encontrado = False
-    for estanteria in hash_table[posicion]:
-              for estante in estanteria:
-                if cota == estante.get_cota():
-                  encontrado = True
-                  libro = estante
-                  break
-              if encontrado == False:
-                print(f"La cota '{cota}' no corresponde a ningun libro registrado")
-                return db,hash_table
-                
-              else:
-                h_disponible = libro.get_disponible() + 1
-                h_prestamo = libro.get_prestamo() - 1
-                libro.set_disponible(h_disponible)
-                libro.set_prestamo(h_prestamo)
+    
     for key,libros in (db['libros'].items()):
       if (cota) == key:
         disponible = libros.get_disponible() - 1
