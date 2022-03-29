@@ -3,6 +3,8 @@ from funciones import *
 def main():
   db = {'libros':{},'cota':[],'titulo':[],'serial':[],'disponible':0,'prestamo':0}
 
+  db = recive_data_text('base.txt',db)
+  
   while True:
     print("Bienvendos al registro de libros de la Librería Pública de Manhattan")
     print("\n")
@@ -22,16 +24,19 @@ def main():
     if option == 1:
       print('\n')
       db = book_register(db)
+      load_data_txt('base.txt',db)
       print('\n')
     elif option == 2:
       break
     elif option == 3:
       print('\n')
       db = book_loan(db)
+      load_data_txt('base.txt',db)
       print('\n')
     elif option == 4:
       print('\n')
       db = book_return(db)
+      load_data_txt('base.txt',db)
       print('\n')
     elif  option == 5:
       break 
